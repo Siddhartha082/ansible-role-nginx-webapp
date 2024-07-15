@@ -17,6 +17,6 @@ No dependencies.
 ## Example Playbook
 
 ```yaml
-- hosts: servers
+- hosts: localhost
   roles:
-    - nginx_webapp
+    - anushasasindran.nginx-webapp
