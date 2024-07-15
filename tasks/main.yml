@@ -1,0 +1,48 @@
+---
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+  become: yes
+
+- name: Ensure Nginx is running
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Create web content directory
+  file:
+    path: /var/www/myapp
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Deploy web page
+  template:
+    src: index.html.j2
+    dest: /var/www/myapp/index.html
+  become: yes
+
+- name: Configure Nginx site
+  template:
+    src: nginx_site.conf.j2
+    dest: /etc/nginx/sites-available/myapp
+  become: yes
+  notify: Reload Nginx
+
+- name: Enable Nginx site
+  file:
+    src: /etc/nginx/sites-available/myapp
+    dest: /etc/nginx/sites-enabled/myapp
+    state: link
+  become: yes
+  notify: Reload Nginx
+
+- name: Remove default Nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: yes
+  notify: Reload Nginx

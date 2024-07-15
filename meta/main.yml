@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Anusha
+  description: Installs Nginx and deploys a simple web application
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - nginx
+    - web
+
+dependencies: []
